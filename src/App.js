@@ -15,6 +15,7 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Main/>
+          {/* <CommentForm/> */}
         </div>
       </BrowserRouter>
     </Provider>
