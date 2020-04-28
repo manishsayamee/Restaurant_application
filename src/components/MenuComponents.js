@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './loadingComponent';
+
 
     // function RenderMenuItem (props) {}
     function RenderMenuItem ({dish, onClick}) {
@@ -19,7 +21,7 @@ import { Link } from 'react-router-dom';
     // function Menu (props) {}
     const Menu = (props) => {
         // map (JS keyword): iterating over every dish in the dishes array here
-        const menu = props.dishes.map((dish) => {
+        const menu = props.dishes.dishes.map((dish) => {
             return (
                 // key: every item require key attribute to specift it.
                 // the key helps React to recognise each one of these elements, uniquely. 
@@ -32,6 +34,29 @@ import { Link } from 'react-router-dom';
         console.log('Menu component render invoked')
 
          // return what needs to diaplay on the UI in this conponent. (return view)
+
+         if (props.dishes.isLoading){
+         
+                return(
+                  <div className="conatiner">
+                    <div className="row">
+                      <Loading />
+                    </div>
+                  </div>
+                )
+              }
+              else if(props.dishes.errMess){
+                return(
+                  <div className="conatiner">
+                    <div className="row">
+                      <h3>{props.dishes.errMess}</h3>
+                    </div>
+                  </div>
+                )
+              }
+
+         
+        else
         return ( 
             <div className="container">
                 <div className="row">
