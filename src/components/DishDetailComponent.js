@@ -32,7 +32,7 @@ import { baseUrl } from '../shared/baseUrl';
         }
     }
 
-    function RenderComments({comments,addComment, dishId}) {
+    function RenderComments({comments,postComment, dishId}) {
         if (comments != null) {
             const cmnts = comments.map((commnts) => {
                 return (
@@ -56,7 +56,7 @@ import { baseUrl } from '../shared/baseUrl';
                 <div className="col-12 col-md-5 m-1">
                     <h4> Comments </h4>
                     {cmnts}
-                    <CommentForm dishId={dishId} addComment={addComment}/>
+                    <CommentForm dishId={dishId} postComment={postComment}/>
                 </div>
             );  
         // if comments is empty     
@@ -89,7 +89,7 @@ import { baseUrl } from '../shared/baseUrl';
       
       handleSubmit(values){
         this.toggleModal();
-        this.props.addComment(this.props.dishId, values.rating,values.author, values.comment)
+        this.props.postComment(this.props.dishId, values.rating,values.author, values.comment)
       }
       
       
@@ -199,7 +199,7 @@ const DishDetail = (props) => {
                     <div className="row">
                         <RenderDish dish={props.dish} />
                         <RenderComments comments={props.comments} 
-                        addComment={props.addComment}
+                        postComment={props.postComment}
                         dishId={props.dish.id}/>
                     </div>    
                 </div>
