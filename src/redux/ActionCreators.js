@@ -156,3 +156,85 @@ export const addPromos=(promos)=>({
   type:ActionTypes.ADD_PROMOS,
   payload:promos
 })
+
+export const fetchLeaders=()=>(dispatch)=>{
+  dispatch(LeadersLoading(true));
+  return fetch(baseUrl+"leaders")
+  .then(response=>{
+    if(response.ok){
+      return response
+    }
+    else{
+      var error=new Error('Error'+ response.status+':'+ response.statusText)
+      response.error=response;
+      throw error;
+    }
+
+ 
+  },
+  error=>{
+    var errmess=new Error(error.message);
+    throw errmess;
+  })
+  .then(response=>response.json())
+  .then(leaders=>dispatch(addLeaders(leaders)))
+  .catch(error=>dispatch(leadersFAiled(error.message)));
+}
+
+export const LeadersLoading=()=>({
+  type:ActionTypes.LEADERS_LOADING,
+});
+
+export const leadersFAiled=(errmess)=>({
+  type:ActionTypes.PROMOS_FAILED,
+  payload:errmess
+})
+
+export const addLeaders=(leaders)=>({
+  type:ActionTypes.ADD_LEADERS,
+  payload:leaders
+});
+
+
+export const postFeedback =( fristname, lastname, telnum, email, agree, contactType, message )=>(dispatch)=>{
+  const newFeedback={
+    fristname:fristname,
+    lastname:lastname,
+    telnum:telnum,
+    email:email,
+    agree:agree,
+    contactType:contactType,
+    message:message
+  };
+  return fetch(baseUrl + 'feedback',{
+    
+    method:"POST",
+    body:JSON.stringify(newFeedback),
+    headers:{"Content-Type":"apllication/json"},
+    credentials:"same-origin"
+  })
+    .then(response=>{
+      if(response.ok){
+        return response
+      }
+
+      else {
+       var error= new Error('Error'+ response.status+':' + response.statusText)
+        error.response= response;
+        throw error;
+      }
+    }, 
+    error=>{
+      
+      throw error;
+  
+
+    }
+    )
+
+    .then(response=>response.json())
+    .then(response=>alert("Thank you for Your Feedback!"+JSON.stringify(response)))
+    .catch(error=>{console.log('post comments', error.message);
+  alert('Your feedback could not be posted/n Error:'+ error.message);
+});
+};
